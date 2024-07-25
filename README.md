@@ -4,11 +4,11 @@
   <img src="doc/images/framework.png" alt="Framework Image" width="30%">
 </p>
 
-triton inference service：triton 服务作为推理后端，只需要配置相应的模型以及模型的配置即可启动一个推理服务
+**triton inference service**: triton 服务作为推理后端，只需要配置相应的模型以及模型的配置即可启动一个推理服务
 
-business logic app：业务逻辑后端主要用于获取 triton 推理的结果，并对结果进行基本的处理，可根据实际业务需求对其进行定制化开发
+**business logic app**: 业务逻辑后端主要用于获取 triton 推理的结果，并对结果进行基本的处理，可根据实际业务需求对其进行定制化开发
 
-UI：前端 UI 用于展示后端业务处理后的内容结果
+**UI**: 前端 UI 用于展示后端业务处理后的内容结果
 
 
 
