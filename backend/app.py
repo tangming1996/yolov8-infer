@@ -17,7 +17,8 @@ def infer():
         file.save(file_path)
 
         # Run inference on the server
-        model = YOLO("http://10.20.100.210:32044/yolov8-infer", task="detect")
+        infer_service = os.getenv('INFER_SERVICE', 'http://localhost:8000/yolov8-infer')
+        model = YOLO(infer_service, task="detect")
         results = model(file_path)
 
         # Process results list
