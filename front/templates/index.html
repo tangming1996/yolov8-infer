@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOLO Image Inference</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+        }
+        #output {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            height: 400px; /* Fixed height for the container */
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%; /* Ensure the image fits within the container */
+            object-fit: contain; /* Maintain aspect ratio */
+            display: block;
+        }
+        button, input[type="file"] {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #loading {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload and Infer Image</h1>
+        <input type="file" id="fileInput" accept="image/*">
+        <button id="inferButton" style="display: none;">推理</button>
+        <div id="loading">推理中...</div>
+        <div id="output"></div>
+    </div>
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.id = 'uploadedImage';
+                document.getElementById('output').innerHTML = '';
+                document.getElementById('output').appendChild(img);
+                document.getElementById('inferButton').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // 使用 Jinja2 渲染 API URL
+        const apiUrl = "{{ api_url }}";
+
+        document.getElementById('inferButton').addEventListener('click', async function () {
+            const img = document.getElementById('uploadedImage');
+            const fileInput = document.getElementById('fileInput');
+            if (img && fileInput.files.length > 0) {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+
+                // Show loading indicator
+                document.getElementById('loading').style.display = 'block';
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    console.log('HTTP Status:', response.status, response.statusText);
+
+                    if (response.ok) {
+                        const data = await response.json();
+
+                        // Hide loading indicator
+                        document.getElementById('loading').style.display = 'none';
+
+                        if (data.error) {
+                            alert('Error: ' + data.error);
+                        } else {
+                            const resultImg = document.createElement('img');
+                            resultImg.src = 'data:image/jpeg;base64,' + data.result;
+                            document.getElementById('output').innerHTML = '';
+                            document.getElementById('output').appendChild(resultImg);
+                        }
+                    } else {
+                        throw new Error('Server error');
+                    }
+                } catch (error) {
+                    // Hide loading indicator
+                    document.getElementById('loading').style.display = 'none';
+                    console.error('Error:', error);
+                }
+            } else {
+                alert('Please upload an image first.');
+            }
+        });
+    </script>
+</body>
+</html>

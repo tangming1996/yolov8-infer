@@ -1,0 +1,4 @@
+Flask
+Pillow
+flask-cors
+tritonclient[all]
