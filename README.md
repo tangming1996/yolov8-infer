@@ -1,6 +1,8 @@
 ### 项目整体流程
 
-<img src="doc/images/framework.png" alt="img.png" style="zoom:50%;" />
+<p align="center">
+  <img src="doc/images/framework.png" alt="Framework Image" width="30%">
+</p>
 
 triton inference service：triton 服务作为推理后端，只需要配置相应的模型以及模型的配置即可启动一个推理服务
 
