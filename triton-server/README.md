@@ -21,3 +21,6 @@ output[
   }
 ]
 ```
+以部署 yolov8 模型为例，需要将 .pt 格式的模型文件装换成 .onnx 格式的模型文件，并且将名称改为 model.onnx, 放置在 ./tmp/triton_repo/yolo/1/model.onnx 目录下
+
+本项目提供了 transfer_to_onnx.py 脚本进行模型转换

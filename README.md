@@ -14,4 +14,4 @@
 
 当前项目基于 yolov8 实现了一个目标检测的简单 demo，旨在将整个流程串通，用户可以根据实际业务需求进行各个模块的定制化开发
 
-[Watch the demo video](doc/images/demo.mp4)
+[Demo 视频](doc/images/demo.mp4)

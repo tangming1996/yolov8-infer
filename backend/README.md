@@ -13,7 +13,5 @@ docker build -t your-image .
 docker run -d -p 5002:5000 -e INFER_SERVICE={推理服务IP} your-image
 # 例如
 # docker run -d -p 5002:5000 -e INFER_SERVICE=http://localhost:8000/yolov8-infer backend:v1
+# 这里的 yolov8-infer 是具体模型目录，比如 triton 配置目录为 /tmp/triton_repo/yolo/1/model.onnx, 那么实际目录就是 yolo
 ```
-
-
-
